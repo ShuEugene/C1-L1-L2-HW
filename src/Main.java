@@ -6,6 +6,14 @@ public class Main {
         Human katia = new Human("Катя", "Калининград", 1992);
         Human artiom = new Human("Артём", "Москва", 1995);
 
+        maxim.jobTitle = "Бренд-менеджер";
+        anna.jobTitle = "Методист образовательных программ";
+        katia.jobTitle = "Продукт-менеджер";
+        artiom.jobTitle = "Директор по развитию бизнеса";
 
+        maxim.sayHello();
+        anna.sayHello();
+        katia.sayHello();
+        artiom.sayHello();
     }
 }
