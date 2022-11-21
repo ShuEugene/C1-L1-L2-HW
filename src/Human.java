@@ -32,52 +32,44 @@ public class Human {
         this(name, null, 0, null);
     }
 
-    boolean isCorrect(String value) {
-        return value != null && !value.isBlank() && !value.isEmpty();
-    }
-
-    boolean isCorrect(int value) {
-        return value > 0;
-    }
-
     public String getName() {
-        if (!isCorrect(name)) return UNKNOWN_INFO;
+        if (!DataService.isCorrect(name)) return UNKNOWN_INFO;
         return name;
     }
 
     public void setName(String name) {
-        if (isCorrect(name)) {
+        if (DataService.isCorrect(name)) {
             this.name = name;
         }
     }
 
     public String getTown() {
-        if (!isCorrect(town)) return UNKNOWN_INFO;
+        if (!DataService.isCorrect(town)) return UNKNOWN_INFO;
         return town;
     }
 
     public void setTown(String town) {
-        if (isCorrect(town)) {
+        if (DataService.isCorrect(town)) {
             this.town = town;
         }
     }
 
     public int getYearOfBirth() {
-        if (!isCorrect(yearOfBirth)) {
+        if (!DataService.isCorrect(yearOfBirth)) {
             return Math.abs(yearOfBirth);
         }
         return yearOfBirth;
     }
 
     public String getStrYearOfBirth() {
-        if (!isCorrect(yearOfBirth)) {
+        if (!DataService.isCorrect(yearOfBirth)) {
             return UNKNOWN_INFO;
         }
         return Integer.toString(yearOfBirth);
     }
 
     public void setYearOfBirth(int yearOfBirth) {
-        if (!isCorrect(yearOfBirth)) {
+        if (!DataService.isCorrect(yearOfBirth)) {
             this.yearOfBirth = Math.abs(yearOfBirth);
             return;
         }
@@ -85,36 +77,36 @@ public class Human {
     }
 
     public void setAge(int age) {
-        if (isCorrect(age)) {
+        if (DataService.isCorrect(age)) {
             setYearOfBirth(LocalDate.now().getYear() - age);
         }
     }
 
     public String getJobTitle() {
-        if (!isCorrect(jobTitle)) return UNKNOWN_INFO;
+        if (!DataService.isCorrect(jobTitle)) return UNKNOWN_INFO;
         return jobTitle;
     }
 
     public void setJobTitle(String jobTitle) {
-        if (isCorrect(jobTitle)) {
+        if (DataService.isCorrect(jobTitle)) {
             this.jobTitle = jobTitle;
         }
     }
 
-    String pronounce(TaleSubjects taleSubjects) {
+    String tellAbout(TaleSubjects taleSubjects) {
         String sentence;
         switch (taleSubjects) {
             case NAME:
-                sentence = isCorrect(name) ? String.format("Меня зовут %s.", name) : "Я забыл(-а), как меня зовут.";
+                sentence = DataService.isCorrect(name) ? String.format("Меня зовут %s.", name) : "Я забыл(-а), как меня зовут.";
                 break;
             case TOWN:
-                sentence = isCorrect(town) ? String.format("Я из города %s.", town) : "Не помню, откуда я.";
+                sentence = DataService.isCorrect(town) ? String.format("Я из города %s.", town) : "Не помню, откуда я.";
                 break;
             case YEAR_OF_BIRTH:
-                sentence = isCorrect(yearOfBirth) ? String.format("Родился(-лась) в %d году.", yearOfBirth) : "Когда родился(-лась) - не помню.";
+                sentence = DataService.isCorrect(yearOfBirth) ? String.format("Родился(-лась) в %d году.", yearOfBirth) : "Когда родился(-лась) - не помню.";
                 break;
             case JOB_TITLE:
-                sentence = isCorrect(jobTitle) ? String.format("Работаю в должности «%s».", jobTitle) : "Пока что не работаю.";
+                sentence = DataService.isCorrect(jobTitle) ? String.format("Работаю в должности «%s».", jobTitle) : "Пока что не работаю.";
                 break;
             default:
                 sentence = "Об этом мне нечего рассказать.";
@@ -124,8 +116,8 @@ public class Human {
 
     void tellAboutYourself() {
         System.out.println("\nПривет!");
-        System.out.printf("%s %s %s\n%s\n", pronounce(TaleSubjects.NAME), pronounce(TaleSubjects.TOWN),
-                pronounce(TaleSubjects.YEAR_OF_BIRTH), pronounce(TaleSubjects.JOB_TITLE));
+        System.out.printf("%s %s %s\n%s\n", tellAbout(TaleSubjects.NAME), tellAbout(TaleSubjects.TOWN),
+                tellAbout(TaleSubjects.YEAR_OF_BIRTH), tellAbout(TaleSubjects.JOB_TITLE));
         System.out.println("Будем знакомы!");
     }
 }

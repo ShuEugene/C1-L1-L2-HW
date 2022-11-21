@@ -4,7 +4,7 @@
 public class Main {
     public static void main(String[] args) {
 
-//        У1.ДЗ: 1.1, 1.2, 2.1, 3.1; У2.ДЗ: 1.1
+/*//        У1.ДЗ: 1.1, 1.2, 2.1, 3.1; У2.ДЗ: 1.1
         Human maxim = new Human("Максим", "Минск", 1988);
         Human anna = new Human("Аня", "Москва", 1993);
         Human katia = new Human("Катя", 1992);
@@ -28,6 +28,22 @@ public class Main {
         Car audiA8_50L = new Car("Audi", "A8 50 L TDI quattro", "чёрный", "Германия", 2020, 3.0f);
         Car bmwZ8 = new Car("BMW", "Z8", "чёрный", "Германия", 2021, 3.0f);
         Car kiaSportage = new Car("Kia", "Sportage 4gen", "красный", "Южная Корея", 2018, 2.4f);
-        Car hyundaiAvante = new Car("Hyundai", "Avante", "оранжевый", null, 0, 1.6f);
+        Car hyundaiAvante = new Car("Hyundai", "Avante", "оранжевый", null, 0, 1.6f);*/
+
+//        У2.ДЗ: 1.2
+        Flower rose = new Flower("Роза обыкновенная", "Голландия", 35.59f);
+        Flower rose1 = new Flower("Роза обыкновенная", "Голландия", 35.59f);
+        Flower chrysanthemum = new Flower("Хризантема", 15.00f, 5);
+        Flower peony = new Flower("Пион", "Англия", 15.00f, 1);
+        Flower gypsophila = new Flower("Гипсофила", "Турция", 19.5f, 10);
+        Flowers.showAssortment();
+
+        Bouquet bouquet = new Bouquet();
+        bouquet.addFlower(rose);
+        bouquet.addFlower(rose1);
+        bouquet.addFlower(gypsophila);
+        bouquet.addFlower(gypsophila);
+        bouquet.addFlower(peony);
+        bouquet.showInfo();
     }
 }
