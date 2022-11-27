@@ -2,6 +2,8 @@ package Car;
 
 import DataService.DataService;
 
+import java.time.LocalDate;
+
 public class Car {
 
     private final String brand, model, productionCountry, body;
@@ -13,24 +15,91 @@ public class Car {
     private String transmission, regNumber;
     private boolean useOfWinterTires;
     private byte defaultParametersNumber = 0;
+    private Key key;
+    private Insurance insurance;
 
-    static final String defaultString = "default";
+    static final String DEFAULT_STRING = "default";
+    static final String UNKNOWN_INFO = "Информация не указана";
 
     public class Key {
-        private final boolean remoteEnginStart;
+        private final boolean remoteEngineStart;
         private final boolean keylessAccess;
 
-        public Key(boolean remoteEnginStart, boolean keylessAccess) {
-            this.remoteEnginStart = remoteEnginStart;
+        public Key(boolean remoteEngineStart, boolean keylessAccess) {
+            this.remoteEngineStart = remoteEngineStart;
             this.keylessAccess = keylessAccess;
         }
 
-        public boolean isRemoteEnginStart() {
-            return remoteEnginStart;
+        public Key() {
+            this(false, false);
+        }
+
+        @Override
+        public String toString() {
+            String remoteEngineStart = this.isRemoteEngineStart() ? "есть" : "нет";
+            String keylessAccess = this.isKeylessAccess() ? "есть" : "нет";
+            return String.format("опции ключа зажигания: удалённый запуск двигателя - %s, безключевой доступ - %s",
+                    remoteEngineStart, keylessAccess);
+        }
+
+        public boolean isRemoteEngineStart() {
+            return remoteEngineStart;
         }
 
         public boolean isKeylessAccess() {
             return keylessAccess;
+        }
+    }
+
+    public class Insurance {
+        private final LocalDate validityPeriod;
+        private final float cost;
+        private final String regNumber;
+
+        public Insurance(LocalDate validityPeriod, float cost, String regNumber) {
+            this.validityPeriod = validityPeriod;
+            this.cost = Math.abs(cost);
+            this.regNumber = regNumber;
+        }
+
+        public boolean periodIsValid() {
+            if (!validityPeriod.isAfter(LocalDate.now())) {
+                System.out.println("\nСтраховка просрочена.");
+                return false;
+            }
+            return true;
+        }
+
+        public boolean regNumberIsCorrect() {
+            return DataService.isCorrect(regNumber) && regNumber.length() == 9;
+        }
+
+        @Override
+        public String toString() {
+            return Car.this.insuranceIsValid() ? String.format("№%s действительна до %s (оплаченная стоимость - %.2f руб.)",
+                    regNumber, validityPeriod, cost) : "отсутствует";
+        }
+
+        public LocalDate getValidityPeriod() {
+            return validityPeriod;
+        }
+
+        public String getStrValidityPeriod() {
+            if (validityPeriod == null) {
+                return UNKNOWN_INFO;
+            }
+            return validityPeriod.toString();
+        }
+
+        public float getCost() {
+            return cost;
+        }
+
+        public String getRegNumber() {
+            if (!DataService.isCorrect(regNumber)) {
+                return UNKNOWN_INFO;
+            }
+            return regNumber;
         }
     }
 
@@ -53,6 +122,10 @@ public class Car {
         } else {
             System.out.println("\n" + this + "успешно добавлен.");
         }
+    }
+
+    public boolean insuranceIsValid() {
+        return insurance.periodIsValid() && insurance.regNumberIsCorrect();
     }
 
     @Override
@@ -133,7 +206,7 @@ public class Car {
 
     public String getRegNumber() {
         if (!isCorrectRegNumber(regNumber)) {
-            regNumber = defaultString;
+            regNumber = DEFAULT_STRING;
             ++defaultParametersNumber;
         }
         return regNumber;
@@ -159,7 +232,7 @@ public class Car {
 
     String getCorrect(String parameter) {
         if (!DataService.isCorrect(parameter)) {
-            parameter = defaultString;
+            parameter = DEFAULT_STRING;
             ++defaultParametersNumber;
         }
         return parameter;
@@ -195,5 +268,23 @@ public class Car {
             ++defaultParametersNumber;
         }
         return color;
+    }
+
+    public Key getKey() {
+        return key;
+    }
+
+    public void setKey(Key key) {
+        this.key = key;
+    }
+
+    public Insurance getInsurance() {
+        return insurance;
+    }
+
+    public void setInsurance(Insurance insurance) {
+        if (insurance != null) {
+            this.insurance = insurance;
+        }
     }
 }

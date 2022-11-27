@@ -1,7 +1,10 @@
 import Car.Car;
+
+import java.time.LocalDate;
 //  Домашние задания 2-го курса
 
 public class Main {
+
     public static void main(String[] args) {
 
 //        У1.ДЗ: 1.1, 1.2, 2.1, 3.1; У2.ДЗ: 1.1
@@ -36,6 +39,32 @@ public class Main {
                 "K", "внедорожник", 2.4f, (byte) 5, "механика", false);
         Car hyundaiAvante = new Car("Hyundai", "Avante", "оранжевый", null, 0,
                 "H456HA456", "седан", 1.6f, (byte) 5, "автоматика",false);
+
+//        У2.ДЗ: 3.2
+        ladaGranta.setKey(ladaGranta.new Key());
+        audiA8_50L.setKey(audiA8_50L.new Key(true, true));
+        bmwZ8.setKey(bmwZ8.new Key(true, true));
+        kiaSportage.setKey(kiaSportage.new Key(true, false));
+        hyundaiAvante.setKey(hyundaiAvante.new Key(true, false));
+        ladaGranta.setInsurance(ladaGranta.new Insurance(LocalDate.of(2023, 12, 31), 1_500f, "123456789"));
+        audiA8_50L.setInsurance(audiA8_50L.new Insurance(LocalDate.of(2023, 10, 15), 2_500f, "234567890"));
+        bmwZ8.setInsurance(bmwZ8.new Insurance(LocalDate.of(2035, 12, 31), 5_500f, ""));
+        kiaSportage.setInsurance(kiaSportage.new Insurance(LocalDate.of(2033, 12, 31), 3_500f, null));
+        hyundaiAvante.setInsurance(hyundaiAvante.new Insurance(LocalDate.of(2023, 11, 1), 1_500f, "345678901"));
+
+        Car[] cars = {ladaGranta, audiA8_50L, bmwZ8, kiaSportage, hyundaiAvante};
+        System.out.println("\n\n~ Дополнительные сведения об автомобилях ~");
+        char printSeparator = ';';
+        for (Car curCar :
+                cars) {
+            if (curCar == cars[cars.length - 1]) {
+                printSeparator = '.';
+            }
+            if (curCar != null) {
+                System.out.printf("\n%s %s (\"%s\")\n%s;\nстраховка %s%c\n",
+                        curCar.getBrand(), curCar.getModel(), curCar.getRegNumber(), curCar.getKey(), curCar.getInsurance(), printSeparator);
+            }
+        }
 
 //        У2.ДЗ: 1.2
 /*
