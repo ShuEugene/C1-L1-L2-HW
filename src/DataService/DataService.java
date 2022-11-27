@@ -1,24 +1,26 @@
+package DataService;
+
 import java.util.Arrays;
 
 public class DataService {
 
-    static boolean isCorrect(String value) {
-        return value != null && !value.isBlank() && !value.isEmpty();
+    static public boolean isCorrect(String parameter) {
+        return parameter != null && !parameter.isBlank() && !parameter.isEmpty();
     }
 
-    static boolean isCorrect(int value) {
-        return value > 0;
+    static public boolean isCorrect(int parameter) {
+        return parameter > 0;
     }
 
-    static boolean isCorrect(float value) {
-        return value > 0;
+    static public boolean isCorrect(float parameter) {
+        return parameter > 0;
     }
 
-    static boolean isCorrect(Object object) {
-        return object != null;
+    static public boolean isCorrect(Object parameter) {
+        return parameter != null;
     }
 
-    static int getValidObjectsNumber(Object[] objects) {
+    static public int getValidObjectsNumber(Object[] objects) {
         if (objects == null) return 0;
         int validRecordsNumber = objects.length;
         for (Object curObj :
@@ -28,7 +30,7 @@ public class DataService {
         return validRecordsNumber;
     }
 
-    static int getValidObjectsNumber(Object[][] objects) {
+    static public int getValidObjectsNumber(Object[][] objects) {
         if (objects == null) return 0;
         int validRecordsNumber = objects.length;
         for (Object[] object : objects) {
@@ -39,18 +41,18 @@ public class DataService {
         return validRecordsNumber;
     }
 
-    static Flower[] getValidObjects(Flower[] objects) {
+    static public <T> T[] getValidObjects(T[] objects) {
         int validObjectsNumber = getValidObjectsNumber(objects);
         if (validObjectsNumber <= 0) return null;
-        Flower[] validObjects = new Flower[validObjectsNumber];
+        T[] validObjects = Arrays.copyOf(objects, validObjectsNumber);
         int validObjectIndex = -1;
-        for (Flower curObj : objects) {
+        for (T curObj : objects) {
             if (curObj != null) validObjects[++validObjectIndex] = curObj;
         }
         return validObjects;
     }
 
-    static String[][] getValidObjects(String[][] objects) {
+    static public String[][] getValidObjects(String[][] objects) {
         int validObjectsNumber = getValidObjectsNumber(objects);
         if (validObjectsNumber <= 0) return null;
         String[][] validObjects = new String[validObjectsNumber][objects[0].length];
@@ -61,5 +63,17 @@ public class DataService {
             }
         }
         return validObjects;
+    }
+
+    static public boolean isLetters(String string) {
+        int noLetterMatchesCount = 0;
+        char[] chars = string.toCharArray();
+        for (char curSymbol :
+                chars) {
+            if (!Character.isLetter(curSymbol)) {
+                ++noLetterMatchesCount;
+            }
+        }
+        return noLetterMatchesCount == 0;
     }
 }
