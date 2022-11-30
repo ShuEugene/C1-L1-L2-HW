@@ -110,12 +110,25 @@ public class Car extends Transport {
         this.seatsNumber = getCorrectSeatsNumber(seatsNumber);
         this.transmission = getCorrect(transmission);
         this.useOfWinterTires = useOfWinterTires;
+        setFuelType();
         if (defaultParametersNumber > 0) {
             System.out.println("\nТранспортное средство «" + getBrand() + "» добавлено c " + defaultParametersNumber
                     + " параметром(-ами) по умолчанию.");
         } else {
             System.out.println("\n" + this + "успешно добавлен.");
         }
+    }
+
+    @Override
+    public void refill() {
+        refill(fuelType);
+    }
+
+    public void refill(String fuelType) {
+        if (!fuelType.equals("ДТ") && !fuelType.equals("бензин") && !fuelType.equals("ЭЭ")) {
+            System.out.println("\nЗаправка данным видом топлива исключена.");
+        }
+        refuel(fuelType);
     }
 
     public boolean insuranceIsValid() {
@@ -229,6 +242,28 @@ public class Car extends Transport {
     public void setInsurance(Insurance insurance) {
         if (insurance != null) {
             this.insurance = insurance;
+        }
+    }
+
+    public String getFuelType() {
+        if (!fuelType.equals("ДТ") && !fuelType.equals("бензин") && !fuelType.equals("ЭЭ")) {
+            return UNKNOWN_INFO;
+        }
+        return fuelType;
+    }
+
+    public void setFuelType() {
+        setFuelType("ДТ");
+    }
+
+    public void setFuelType(String fuelType) {
+        switch (fuelType) {
+            case "бензин":
+            case "ЭЭ":
+                this.fuelType = fuelType;
+                break;
+            default:
+                this.fuelType = "ДТ";
         }
     }
 }

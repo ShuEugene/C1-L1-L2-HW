@@ -23,6 +23,7 @@ public class Train extends Transport {
         setEndStation(endStation);
         setTripCost(tripCost);
         setNumberOfWagons(numberOfWagons);
+        setFuelType();
         if (defaultParametersNumber > 0) {
             System.out.println("\nТранспортное средство «" + getBrand() + "» добавлено c " + defaultParametersNumber
                     + " параметром(-ами) по умолчанию.");
@@ -32,12 +33,26 @@ public class Train extends Transport {
     }
 
     @Override
+    public void refill() {
+        refill("ДТ");
+    }
+
+    public void refill(String fuelType) {
+        if (getFuelPercentage() >= 100) {
+            System.out.println(FULL_FUEL_TANK);
+        } else {
+            System.out.println(REFILL_FUEL_TANK.replace("<типТоплива>", fuelType).
+                    replace("<частьБака>", Float.toString(100f - getFuelPercentage())));
+        }
+    }
+
+    @Override
     public String toString() {
         return String.format("Поезд марки %s %s\n" +
                         "(цвет: %s; страна-производитель: %s; год выпуска: %d),\n" +
                         "идущий c %d вагоном(-ами) по маршруту «%s - %s» со скоростью %s\n" +
                         "(стоимость поездки - %s)\n",
-                getBrand(), getModel(), getColor(),getProductionCountry(), getProductionYear(),
+                getBrand(), getModel(), getColor(), getProductionCountry(), getProductionYear(),
                 getNumberOfWagons(), getStartStation(), getEndStation(), getStrSpeed(), getStrTripCost());
     }
 
@@ -102,6 +117,23 @@ public class Train extends Transport {
             this.numberOfWagons = Math.abs(numberOfWagons);
         } else {
             ++defaultParametersNumber;
+        }
+    }
+
+    public String getFuelType() {
+        if (!fuelType.equals("ДТ")) {
+            return UNKNOWN_INFO;
+        }
+        return fuelType;
+    }
+
+    public void setFuelType() {
+        setFuelType("ДТ");
+    }
+
+    public void setFuelType(String fuelType) {
+        if (fuelType.equals("ДТ")) {
+            this.fuelType = fuelType;
         }
     }
 }

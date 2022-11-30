@@ -77,6 +77,13 @@ public class Main {
 //        У3.ДЗ: 1.3
         Bus ikarus = new Bus("Ikarus", "260", "жёлтый", "Венгрия", 1971, 66);
         Bus paz = new Bus("ПАЗ", "ПАЗ-32053/54", 2021, 95);
+
+//        У3.ДЗ: 2.1
+        ikarus.setFuelPercentage(35);
+        ikarus.refill();
+        ladaGranta.setFuelPercentage(50.5f);
+        ladaGranta.refill("ЭЭ");
+
 //        У2.ДЗ: 1.2
 /*
         Flower rose = new Flower("Роза обыкновенная", "Голландия", 35.59f);
