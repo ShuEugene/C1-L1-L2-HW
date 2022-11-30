@@ -1,3 +1,4 @@
+import transport.Bus;
 import transport.Car;
 import transport.Train;
 
@@ -73,6 +74,9 @@ public class Main {
         Train leningrad = new Train("Ленинград", "D-125", 2019, 270, "Ленинградский вокзал", "Ленинград-Пассажирский",
                 1700f, 8);
 
+//        У3.ДЗ: 1.3
+        Bus ikarus = new Bus("Ikarus", "260", "жёлтый", "Венгрия", 1971, 66);
+        Bus paz = new Bus("ПАЗ", "ПАЗ-32053/54", 2021, 95);
 //        У2.ДЗ: 1.2
 /*
         Flower rose = new Flower("Роза обыкновенная", "Голландия", 35.59f);
