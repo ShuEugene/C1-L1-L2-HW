@@ -1,25 +1,23 @@
-package Car;
+package transport;
 
-import DataService.DataService;
+import dataService.DataService;
 
 import java.time.LocalDate;
 
-public class Car {
+public class Car extends Transport {
 
-    private final String brand, model, productionCountry, body;
-    private final int productionYear;
+    private final String body;
     private final byte seatsNumber;
 
-    private String color;
     private float engineVolume;
-    private String transmission, regNumber;
+    private String transmission;
+
+    private String regNumber;
+
     private boolean useOfWinterTires;
-    private byte defaultParametersNumber = 0;
+
     private Key key;
     private Insurance insurance;
-
-    static final String DEFAULT_STRING = "default";
-    static final String UNKNOWN_INFO = "Информация не указана";
 
     public class Key {
         private final boolean remoteEngineStart;
@@ -86,7 +84,7 @@ public class Car {
 
         public String getStrValidityPeriod() {
             if (validityPeriod == null) {
-                return UNKNOWN_INFO;
+                return Transport.UNKNOWN_INFO;
             }
             return validityPeriod.toString();
         }
@@ -105,12 +103,7 @@ public class Car {
 
     public Car(String brand, String model, String color, String productionCountry, int productionYear, String regNumber,
                String body, float engineVolume, byte seatsNumber, String transmission, boolean useOfWinterTires) {
-        defaultParametersNumber = 0;
-        this.brand = getCorrect(brand);
-        this.model = getCorrect(model);
-        this.color = getCorrectColor(color);
-        this.productionCountry = getCorrect(productionCountry);
-        this.productionYear = getCorrectProductionYear(productionYear);
+        super(brand, model, color, productionCountry, productionYear);
         setRegNumber(regNumber);
         this.body = getCorrect(body);
         this.engineVolume = getCorrectEngineVolume(engineVolume);
@@ -118,7 +111,8 @@ public class Car {
         this.transmission = getCorrect(transmission);
         this.useOfWinterTires = useOfWinterTires;
         if (defaultParametersNumber > 0) {
-            System.out.println("\nАвтомобиль " + getBrand() + " добавлен c " + defaultParametersNumber + " параметром(-ами) по умолчанию.");
+            System.out.println("\nТранспортное средство «" + getBrand() + "» добавлено c " + defaultParametersNumber
+                    + " параметром(-ами) по умолчанию.");
         } else {
             System.out.println("\n" + this + "успешно добавлен.");
         }
@@ -133,42 +127,16 @@ public class Car {
         return String.format("Автомобиль марки %s %s\n" +
                         "(цвет: %s; тип кузова: %s; количество мест: %d; страна-производитель: %s; год выпуска: %d;\n" +
                         "объём двигателя: %.1f л; тип коробки передач: %s; покрышки: %s; регистрационный номер: \"%s\")\n",
-                brand, model, color, body, seatsNumber, productionCountry, productionYear,
+                getBrand(), getModel(), getColor(), body, seatsNumber, getProductionCountry(), getProductionYear(),
                 engineVolume, transmission, getTiresType(), regNumber);
-    }
-
-    public String getBrand() {
-        return getCorrect(brand);
-    }
-
-    public String getModel() {
-        return getCorrect(model);
-    }
-
-    public String getProductionCountry() {
-        return getCorrect(productionCountry);
     }
 
     public String getBody() {
         return getCorrect(body);
     }
 
-    public int getProductionYear() {
-        return getCorrectProductionYear(productionYear);
-    }
-
     public byte getSeatsNumber() {
         return getCorrectSeatsNumber(seatsNumber);
-    }
-
-    public String getColor() {
-        return getCorrectColor(color);
-    }
-
-    public void setColor(String color) {
-        if (DataService.isCorrect(color)) {
-            this.color = color;
-        } else this.color = getCorrectColor(color);
     }
 
     public float getEngineVolume() {
@@ -206,7 +174,7 @@ public class Car {
 
     public String getRegNumber() {
         if (!isCorrectRegNumber(regNumber)) {
-            regNumber = DEFAULT_STRING;
+            regNumber = UNKNOWN_INFO;
             ++defaultParametersNumber;
         }
         return regNumber;
@@ -230,25 +198,9 @@ public class Car {
         return areWinterTiresUsed() ? "зимние" : "летние";
     }
 
-    String getCorrect(String parameter) {
-        if (!DataService.isCorrect(parameter)) {
-            parameter = DEFAULT_STRING;
-            ++defaultParametersNumber;
-        }
-        return parameter;
-    }
-
     float getCorrectEngineVolume(float parameter) {
         if (parameter <= 0) {
             parameter = 1.5f;
-            ++defaultParametersNumber;
-        }
-        return parameter;
-    }
-
-    int getCorrectProductionYear(int parameter) {
-        if (parameter <= 0) {
-            parameter = 2_000;
             ++defaultParametersNumber;
         }
         return parameter;
@@ -260,14 +212,6 @@ public class Car {
             ++defaultParametersNumber;
         }
         return parameter;
-    }
-
-    String getCorrectColor(String color) {
-        if (!DataService.isCorrect(color)) {
-            color = "белый";
-            ++defaultParametersNumber;
-        }
-        return color;
     }
 
     public Key getKey() {

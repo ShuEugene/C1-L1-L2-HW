@@ -1,4 +1,4 @@
-package DataService;
+package dataService;
 
 import java.util.Arrays;
 

@@ -1,4 +1,5 @@
-import Car.Car;
+import transport.Car;
+import transport.Train;
 
 import java.time.LocalDate;
 //  Домашние задания 2-го курса
@@ -41,7 +42,7 @@ public class Main {
                 "H456HA456", "седан", 1.6f, (byte) 5, "автоматика",false);
 
 //        У2.ДЗ: 3.2
-        ladaGranta.setKey(ladaGranta.new Key());
+/*        ladaGranta.setKey(ladaGranta.new Key());
         audiA8_50L.setKey(audiA8_50L.new Key(true, true));
         bmwZ8.setKey(bmwZ8.new Key(true, true));
         kiaSportage.setKey(kiaSportage.new Key(true, false));
@@ -64,7 +65,13 @@ public class Main {
                 System.out.printf("\n%s %s (\"%s\")\n%s;\nстраховка %s%c\n",
                         curCar.getBrand(), curCar.getModel(), curCar.getRegNumber(), curCar.getKey(), curCar.getInsurance(), printSeparator);
             }
-        }
+        }*/
+
+//        У3.ДЗ: 1.2
+        Train lastochka = new Train("Ласточка", "B-901", "голубой", "Беларусь", 2011,301,
+                "Белорусский вокзал", "Минск-Пассажирский", 3500f, 11);
+        Train leningrad = new Train("Ленинград", "D-125", 2019, 270, "Ленинградский вокзал", "Ленинград-Пассажирский",
+                1700f, 8);
 
 //        У2.ДЗ: 1.2
 /*
